@@ -1,4 +1,3 @@
-
 //Element seletion
 const playerZero = el('.player--0');
 const playerOne = el('.player--1');
@@ -11,8 +10,16 @@ const diceEl = el('.dice');
 const btnNew = el('.btn--new');
 const btnRoll = el('.btn--roll');
 const btnHold = el('.btn--hold');
+const name1 = el(`#name--0`);
+const name2 = el(`#name--1`);
+const names = [];
 
+//trying to receive names which will replace the dfault player0/1 name
+names[0] = prompt(`Enter first player's name`);
+names[1] = prompt(`Enter second player's name`);
 
+el(`#name--0`).textContent = names[0];
+el(`#name--1`).textContent = names[1];
 //Global variables
 let scores, currentScore, activePlayer, playing, scoreBoard;
 //State variable
@@ -74,7 +81,10 @@ btnHold.addEventListener('click', function (){
             //change game state
             playing = false;
             // lastWinner = activePlayer;
-            
+            el(`#score--${activePlayer}`).textContent = 'Winner';
+            el(`#score--${1-activePlayer}`).classList.add('hidden');
+            btnRoll.classList.add('hidden');
+            btnHold.classList.add('hidden');
             scoreBoard[activePlayer] +=1; 
             //Hide he dice
             // diceEl.classList.add('hidden');
@@ -134,6 +144,7 @@ function diceThrowOne(){
 }
 
 function restoreDefault(){
+el(`#score--${1-activePlayer}`).classList.remove('hidden');
 scores = [0,0];
 currentScore = 0;
 activePlayer = activePlayer == 0? 1:0;
@@ -149,5 +160,6 @@ playerOne.classList.remove('player--winner');
 playerZero.classList.remove('player--active');
 playerOne.classList.remove('player--active');
 el(`.player--${activePlayer}`).classList.add('player--active');
-// el('.player--0')
+btnRoll.classList.remove('hidden');
+btnHold.classList.remove('hidden');
 }
